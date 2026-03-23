@@ -11,13 +11,27 @@ tasksRouter.post("/", auth, async (req, res) => {
   const data = {
     user: user.id,
     title: req.body.title,
+    description: req.body.description,
   };
   try {
-    return res.send(data)
+    const task = new TasksOrm(data);
+    await task.save()
+    return res.send(task);
   } catch (err) {
     return res.sendStatus(400);
   }
 });
 
+
+tasksRouter.get("/", auth, async (req, res) => {
+  const user = (req as RequestWithUser).user;
+
+  try {
+    const tasks = await TasksOrm.find({user: user.id});
+    return res.send(tasks);
+  } catch (err) {
+    return res.sendStatus(400);
+  }
+});
 
 export default tasksRouter;
