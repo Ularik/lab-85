@@ -23,7 +23,7 @@ usersRouter.post("/", async (req, res) => {
     }
 });
 
-usersRouter.post('/login', async (req, res) => {
+usersRouter.post('/sessions', async (req, res) => {
 
     const user = await UsersOrm.findOne({username: req.body.username});
     if (!user) {

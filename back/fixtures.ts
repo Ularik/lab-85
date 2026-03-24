@@ -15,25 +15,31 @@ const run = async () => {
     console.log("Collections were not present, skipping drop...");
   }
 
-  const [cpuUsers, ssdUsers] = await UsersOrm.create(
+  const [adminUser, testUsers] = await UsersOrm.create(
     {
       username: "admin",
       password: "admin",
+      token: "123"
     },
     {
-      username: "ular",
-      password: "ular",
+      username: "test",
+      password: "test",
+      token: "321"
     },
   );
 
   await TasksOrm.create(
     {
+      user: adminUser!._id,
       title: "Buy eggs",
       description: "Buy eggs",
+      status: "in_progress"
     },
     {
+      user: testUsers!._id,
       title: "finish work",
       description: "finish work",
+      status: "new"
     },
   );
 

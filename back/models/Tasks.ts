@@ -14,7 +14,12 @@ const TasksSchema = new mongoose.Schema({
         required: true,
     },
     description: String,
-
+    status: {
+        type: String,
+        required: true,
+        enum: ["new", "in_progress", "complete"],
+        default: "new"
+    }
 });
 
 const TasksOrm = mongoose.model("Tasks", TasksSchema);
